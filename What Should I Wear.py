@@ -448,7 +448,10 @@ while run:
             image = pygame.image.load('Raincoat.png')
             screen.blit(image,(75, 275))
         if No_Coat == True:
-            Result_Coat = ("No coat, ")
+            Result_Coat = ("No coat")
+            image = pygame.image.load('X.png')
+            
+            screen.blit(image,(75, 275))
         if Long_Sleeve_Shirt == True:
             Result_Shirt = ("long sleeve shirt, ")
             image = pygame.image.load('Long Sleeve Shirt.png')
@@ -463,6 +466,8 @@ while run:
             screen.blit(image,(225, 75))
         if Hoodie == False:
             Result_Hoodie = ("No hoodie")
+            image = pygame.image.load('X.png')
+            screen.blit(image,(225, 75))
         if Sunglasses == True:
             Result_Accesory = ("Sunglasses")
             image = pygame.image.load('Sunglasses.png')
@@ -477,6 +482,8 @@ while run:
             Result_Accesory = ("Umbrella")
         if Rain_Coat == False and Beanie == False and Sunglasses == False:
             Result_Accesory = ("No accessory")
+            image = pygame.image.load('X.png')
+            screen.blit(image,(75, 75))
 
         Small_Text(Result_Shoe, text_font_D, Black, 375, 375)
         Small_Text(Result_Pants, text_font_D, Black, 375, 175)

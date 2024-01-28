@@ -10,6 +10,9 @@ White = (255, 255, 255)
 Red = (255, 0, 0)
 Green = (0, 255, 0)
 Blue = (0, 0, 255)
+Dark_Brown = (130, 70, 0)
+Brown = (175, 100, 0)
+Grey = (200, 200, 200)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -33,6 +36,10 @@ def Question_or_Result(text, font, text_col, x, y):
 def Small_Text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
+
+pygame.display.set_caption('image')
+
+
 
 Freezing = ("Is it Freezing?")
 
@@ -97,6 +104,8 @@ Shorts = False
 Long_Sleeve_Shirt = False
 T_Shirt = False
 
+Muddy = False
+
 Show_Result = False
 
 Colour_1 = White
@@ -111,15 +120,15 @@ N = False
 run = True
 while run:
 
-    screen.fill((0, 205, 255))
+    screen.fill((Colour_1))
 
-    draw_text("What Should I Wear?", text_font, White, 125, 50)
+    draw_text("What Should I Wear?", text_font, Colour_2, 125, 50)
 
-    Question_or_Result(Questions, text_font_Q, Colour_1, x_coordinate, y_coordinate)
+    Question_or_Result(Questions, text_font_Q, Colour_2, x_coordinate, y_coordinate)
 
     Small_Text(Degree, text_font_D, Colour_2, 200, 175)
 
-    Small_Text("Use Y for yes and N for no.", text_font_D, Colour_2, 225, 350)
+    Small_Text("Use Y for yes and N for no.", text_font_D, Black, 225, 350)
 
     key = pygame.key.get_pressed()
     if key[pygame.K_y] == True:
@@ -133,6 +142,7 @@ while run:
     if Questions == Freezing:
         x_coordinate = 200
         y_coordinate = 125
+        Colour_2 = Grey
         Colour_1 = White
         if N == True:
             N = False
@@ -152,6 +162,8 @@ while run:
             Questions = Snowing
     
     if Questions == Cold:
+        Colour_2 = White
+        Colour_1 = ((0, 205, 255))
         Degree = ("1 °C - 10 °C, 33 °F - 50 °F")
         if N == True:
             N = False
@@ -174,6 +186,8 @@ while run:
             Y = False
    
     if Questions == Normal:
+        Colour_2 = ((255, 150, 0))
+        Colour_1 = ((230, 230, 0))
         Degree = ("11 °C - 20 °C, 51 °F - 68 °F")
         if N == True:
             N = False
@@ -194,6 +208,7 @@ while run:
             Questions = Rain
 
     if Questions == Hot:
+        Colour_2 = Red
         Colour_1 = ((255, 125, 0))
         Degree = ("21 °C - 30 °C, 69 °F - 86 °F")
         if N == True:
@@ -215,6 +230,7 @@ while run:
             Questions = Rain
     
     if Questions == Burning_Hot:
+        Colour_2 = ((150, 0, 0))
         Colour_1 = Red
         Degree = ("31 °C or above, 87 °F or above")
         if Y == True:
@@ -273,9 +289,10 @@ while run:
         run = False
         
 
-    if Questions == Rain and Sandals == False: 
-        Colour_1 = Blue
-        Colour_2 = ((0, 205, 255))
+    if Questions == Rain and Sandals == False:
+        Colour_1 = ((0, 225, 255))
+        Colour_2 = ((0, 130, 215))
+        Degree = (" ")
         if N == True:
             N = False
             clock.tick(1)
@@ -293,21 +310,25 @@ while run:
             Questions = Mud
 
     if Questions == Mud:
-        Colour_1 = ((175, 100, 0))
+        Colour_2 = Dark_Brown
+        Colour_1 = Brown
         if N == True:
             N = False
             clock.tick(1)
             Questions = Snowing
-            if Sandals == True or Hot_Temp == True or Normal_Temp == True:
+            if Sandals == True or Hot_Temp == True:
                 Show_Result = True
             if Cold_Temp == True:
                 Questions = A_Lot_Snow
+            if Normal_Temp == True and Raining == False:
+                Questions = Little_Snow
         if Y == True:
             Y = False
             Sandals = False
             Sneakers = False
             Winter_Boots = False
             Rain_Boots = True
+            Muddy = True
             clock.tick(1)
             Questions = Snowing
             if Sandals == True or Hot_Temp == True or Normal_Temp == True:
@@ -317,6 +338,7 @@ while run:
 
     if Questions == Snowing:
         Colour_1 = White
+        Colour_2 = Grey
         if N == True:
             N = False
             clock.tick(1)
@@ -331,8 +353,9 @@ while run:
             Show_Result = True
             
     if Questions == A_Lot_Snow:
-        x_coordinate = 150
+        Colour_2 = Grey
         Colour_1 = White
+        x_coordinate = 150
         if N == True:
             N = False
             clock.tick(1)
@@ -348,8 +371,9 @@ while run:
             Show_Result = True
       
     if Questions == Little_Snow:
-        x_coordinate = 100
         Colour_1 = White
+        Colour_2 = Grey
+        x_coordinate = 100
         if N == True:
             N = False
             clock.tick(1)
@@ -368,56 +392,98 @@ while run:
                 Winter_Boots = True
                 Rain_Boots = False
                 Show_Result = True
+            if Normal_Temp == True and Muddy == False:
+                Sandals = False
+                Sneakers = True
+                Winter_Boots = False
+                Rain_Boots = False
+                Show_Result = True
 
 
     if Show_Result == True:
         screen.fill((0, 205, 255))
-        draw_text("What Should I Wear?", text_font, White, 125, 50)
+        draw_text("What Should I Wear?", text_font, Colour_2, 125, 50)
         if Sandals == True:
             Colour_1 = Red
-            Result_Shoe = ("You should wear sandals ")
+            Colour_2 = ((150, 0, 0))
+            Result_Shoe = ("Sandals")
+            image = pygame.image.load('Sandals.png')
+            screen.blit(image,(375, 275))
         if Sneakers == True:
-            Colour_1 = Green
-            Result_Shoe = ("You should wear sneakers ")
+            Colour_1 = ((230, 230, 0))
+            Colour_2 = ((255, 150, 0))
+            Result_Shoe = ("Sneakers")
+            image = pygame.image.load('Sneakers.png')
+            screen.blit(image,(375, 275))
         if Winter_Boots == True:
             Colour_1 = White
-            Result_Shoe = ("You should wear winter boots ")
+            Colour_2 = Grey
+            Result_Shoe = ("Winter Boots")
+            image = pygame.image.load('Winter Boots.png')
+            screen.blit(image,(375, 275))
         if Rain_Boots == True:
-            Colour_1 = Blue
-            Result_Shoe = ("You should wear rain boots, ")
+            Colour_1 = ((0, 225, 255))
+            Colour_2 = ((0, 130, 215))
+            Result_Shoe = ("Rain Boots")
+            image = pygame.image.load('Rain Boots.png')
+            screen.blit(image,(375, 275))
         if Long_Pants == True:
-            Result_Pants = ("long pants, ")
+            Result_Pants = ("Long Pants")
+            image = pygame.image.load('Long Pants.png')
+            screen.blit(image,(375, 75))
         if Shorts == True:
-            Result_Pants = ("shorts, ")
+            Result_Pants = ("Shorts")
+            image = pygame.image.load('Shorts.png')
+            screen.blit(image,(375, 75))
         if Winter_Coat == True:
-            Result_Coat = ("winter coat, ")
+            Result_Coat = ("Winter coat")
+            image = pygame.image.load('Winter Coat.png')
+            screen.blit(image,(75, 275))
         if Light_Coat == True:
-            Result_Coat = ("light coat, ")
+            Result_Coat = ("Light coat")
+            image = pygame.image.load('Light Coat.png')
+            screen.blit(image,(75, 275))
         if Rain_Coat == True:
-            Result_Coat = ("raincoat or umbrella, ")
+            Result_Coat = ("Raincoat")
+            image = pygame.image.load('Raincoat.png')
+            screen.blit(image,(75, 275))
         if No_Coat == True:
-            Result_Coat = ("no coat, ")
+            Result_Coat = ("No coat, ")
         if Long_Sleeve_Shirt == True:
             Result_Shirt = ("long sleeve shirt, ")
+            image = pygame.image.load('Long Sleeve Shirt.png')
+            screen.blit(image,(225, 275))
         if T_Shirt == True:
-            Result_Shirt = ("t-shirt, ")
+            Result_Shirt = ("T-shirt")
+            image = pygame.image.load('T Shirt.png')
+            screen.blit(image,(225, 275))
         if Hoodie == True:
-            Result_Hoodie = ("hoodie, ")
+            Result_Hoodie = ("Hoodie")
+            image = pygame.image.load('Hoodie.png')
+            screen.blit(image,(225, 75))
         if Hoodie == False:
-            Result_Hoodie = ("no hoodie, ")
+            Result_Hoodie = ("No hoodie")
         if Sunglasses == True:
-            Result_Accesory = ("sunglasses, and you ready!")
+            Result_Accesory = ("Sunglasses")
+            image = pygame.image.load('Sunglasses.png')
+            screen.blit(image,(75, 75))
         if Beanie == True:
-            Result_Accesory = ("a beanie, and you ready!")
-        if Beanie == False and Sunglasses == False:
-            Result_Accesory = ("and your ready!")
+            Result_Accesory = ("Beanie")
+            image = pygame.image.load('Beanie.png')
+            screen.blit(image,(75, 75))
+        if Rain_Coat == True:
+            image = pygame.image.load('Umbrella.png')
+            screen.blit(image,(75, 75))
+            Result_Accesory = ("Umbrella")
+        if Rain_Coat == False and Beanie == False and Sunglasses == False:
+            Result_Accesory = ("No accessory")
 
-        Question_or_Result(Result_Shoe, text_font_Q, Colour_1, 100, 100)
-        Question_or_Result(Result_Pants, text_font_Q, Colour_1, 100, 150)
-        Question_or_Result(Result_Shirt, text_font_Q, Colour_1, 100, 200)
-        Question_or_Result(Result_Coat, text_font_Q, Colour_1, 100, 250)
-        Question_or_Result(Result_Hoodie, text_font_Q, Colour_1, 100, 300)
-        Question_or_Result(Result_Accesory, text_font_Q, Colour_1, 100, 350)
+        Small_Text(Result_Shoe, text_font_D, Black, 375, 375)
+        Small_Text(Result_Pants, text_font_D, Black, 375, 175)
+        Small_Text(Result_Shirt, text_font_D, Black, 225, 375)
+        Small_Text(Result_Coat, text_font_D, Black, 75, 375)
+        Small_Text(Result_Hoodie, text_font_D, Black, 225, 175)
+        Small_Text(Result_Accesory, text_font_D, Black, 75, 175)
 
 
     for event in pygame.event.get():

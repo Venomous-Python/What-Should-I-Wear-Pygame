@@ -88,6 +88,7 @@ Rain_Boots = False
 #Accesories or other things you may need
 Beanie = False
 Sunglasses = False
+Umbrella = False
 
 #Different Coats
 Winter_Coat = False
@@ -354,15 +355,36 @@ while run:
             Questions = Mud
         if Y == True:
             Y = False
-            Rain_Coat = True
-            Rain_Boots = True
-            Raining = True
-            clock.tick(1)
-            Sandals = False
-            Sneakers = False
-            Winter_Boots = False
-            Rain_Boots = True
-            Questions = Mud
+            if Light_Coat == False and Winter_Coat == False:
+                Rain_Coat = True
+                Rain_Boots = True
+                Raining = True
+                clock.tick(1)
+                Sandals = False
+                Sneakers = False
+                Winter_Boots = False
+                Rain_Boots = True
+                Questions = Mud
+            if Light_Coat == True:
+                Umbrella = True
+                Rain_Boots = True
+                Raining = True
+                clock.tick(1)
+                Sandals = False
+                Sneakers = False
+                Winter_Boots = False
+                Rain_Boots = True
+                Questions = Mud
+            if Winter_Coat == True:
+                Umbrella = True
+                Rain_Boots = True
+                Raining = True
+                clock.tick(1)
+                Sandals = False
+                Sneakers = False
+                Winter_Boots = False
+                Rain_Boots = True
+                Questions = Mud
 
     #Depending on your previous answers and your current answer some questions may be skipped
     if Questions == Mud:
@@ -505,7 +527,7 @@ while run:
             Result_Coat = ("Raincoat")
             image = pygame.image.load('Raincoat.png')
             screen.blit(image,(75, 275))
-        if No_Coat == True:
+        if Rain_Coat == False and Winter_Coat == False and Light_Coat == False:
             Result_Coat = ("No coat")
             image = pygame.image.load('X.png')
 
@@ -534,11 +556,11 @@ while run:
             Result_Accesory = ("Beanie")
             image = pygame.image.load('Beanie.png')
             screen.blit(image,(75, 75))
-        if Rain_Coat == True:
+        if Rain_Coat == True or Umbrella == True:
             image = pygame.image.load('Umbrella.png')
             screen.blit(image,(75, 75))
             Result_Accesory = ("Umbrella")
-        if Rain_Coat == False and Beanie == False and Sunglasses == False:
+        if Rain_Coat == False and Beanie == False and Sunglasses == False and Umbrella == False:
             Result_Accesory = ("No accessory")
             image = pygame.image.load('X.png')
             screen.blit(image,(75, 75))
